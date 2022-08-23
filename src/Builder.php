@@ -24,7 +24,10 @@ class Builder
                 $relation = $this->selectRaw("percentile_cont(?) within group (order by $quotedColumn)", [$percentile]);
             } elseif ($driverName == 'mysql') {
                 if ($this->getConnection()->isMaria()) {
-                    $relation = $this->selectRaw("percentile_cont(?) within group (order by $quotedColumn) over ()", [$percentile]);
+                    // need to interpolate directly to prevent error
+                    // so ensure float as additional line of defense
+                    $quotedPercentile = floatval($percentile);
+                    $relation = $this->selectRaw("percentile_cont($quotedPercentile) within group (order by $quotedColumn) over ()");
                 } else {
                     $relation = $this->selectRaw("percentile_cont($quotedColumn, ?)", [$percentile]);
                 }
