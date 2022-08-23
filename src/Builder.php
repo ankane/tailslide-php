@@ -26,6 +26,7 @@ class Builder
                 if ($this->getConnection()->isMaria()) {
                     // need to interpolate directly to prevent error
                     // so ensure float as additional line of defense
+                    // TODO quote with driver
                     $quotedPercentile = floatval($percentile);
                     $relation = $this->selectRaw("percentile_cont($quotedPercentile) within group (order by $quotedColumn) over ()");
                 } else {
