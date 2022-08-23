@@ -15,7 +15,7 @@ if ($adapter == 'pgsql') {
         'driver' => 'pgsql',
         'database' => 'tailslide_php_test'
     ]);
-} elseif ($adapter == 'mysql') {
+} elseif ($adapter == 'mysql' || $adapter == 'mariadb') {
     $capsule->addConnection([
         'driver' => 'mysql',
         'database' => 'tailslide_php_test',
