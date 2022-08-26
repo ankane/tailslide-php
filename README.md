@@ -34,7 +34,7 @@ Item::median('price');
 Percentile
 
 ```php
-Item::percentile('response_time', 0.95);
+Request::percentile('response_time', 0.95);
 ```
 
 ## Additional Instructions
