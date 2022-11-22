@@ -4,34 +4,34 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - run: composer install
+      - uses: actions/checkout@v3
+      - run: composer install
 
-    - uses: ankane/setup-postgres@v1
-      with:
-        database: tailslide_php_test
-    - run: ADAPTER=pgsql composer test
+      - uses: ankane/setup-postgres@v1
+        with:
+          database: tailslide_php_test
+      - run: ADAPTER=pgsql composer test
 
-    - uses: ankane/setup-mysql@v1
-      with:
-        database: tailslide_php_test
-    - run: |
-        cd /tmp
-        git clone https://github.com/infusion/udf_infusion.git
-        cd udf_infusion
-        ./configure --enable-functions="percentile_cont"
-        make
-        sudo make install
-        mysql -uroot < load.sql
-    - run: ADAPTER=mysql composer test
+      - uses: ankane/setup-mysql@v1
+        with:
+          database: tailslide_php_test
+      - run: |
+          cd /tmp
+          git clone https://github.com/infusion/udf_infusion.git
+          cd udf_infusion
+          ./configure --enable-functions="percentile_cont"
+          make
+          sudo make install
+          mysql -uroot < load.sql
+      - run: ADAPTER=mysql composer test
 
-    - uses: ankane/setup-mariadb@v1
-      with:
-        database: tailslide_php_test
-    - run: ADAPTER=mariadb composer test
+      - uses: ankane/setup-mariadb@v1
+        with:
+          database: tailslide_php_test
+      - run: ADAPTER=mariadb composer test
 
-    - uses: ankane/setup-sqlserver@v1
-      with:
-        accept-eula: true
-    - run: sqlcmd -U SA -P 'YourStrong!Passw0rd' -Q 'CREATE DATABASE tailslide_php_test'
-    - run: ADAPTER=sqlsrv composer test
+      - uses: ankane/setup-sqlserver@v1
+        with:
+          accept-eula: true
+      - run: sqlcmd -U SA -P 'YourStrong!Passw0rd' -Q 'CREATE DATABASE tailslide_php_test'
+      - run: ADAPTER=sqlsrv composer test
