@@ -67,7 +67,8 @@ final class PercentileTest extends TestCase
 
     public function testMissingColumn()
     {
-        $this->expectErrorMessage('column');
+        $this->expectException(\Illuminate\Database\QueryException::class);
+        $this->expectExceptionMessage('column');
 
         User::percentile('missing', 0.75);
     }

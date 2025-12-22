@@ -59,7 +59,8 @@ final class MedianTest extends TestCase
 
     public function testMissingColumn()
     {
-        $this->expectErrorMessage('column');
+        $this->expectException(\Illuminate\Database\QueryException::class);
+        $this->expectExceptionMessage('column');
 
         User::median('missing');
     }
