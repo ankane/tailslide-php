@@ -2,9 +2,9 @@ name: build
 on: [push, pull_request]
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
       - run: composer install
 
       - uses: ankane/setup-postgres@v1
@@ -33,5 +33,5 @@ jobs:
       - uses: ankane/setup-sqlserver@v1
         with:
           accept-eula: true
-      - run: sqlcmd -U SA -P 'YourStrong!Passw0rd' -Q 'CREATE DATABASE tailslide_php_test'
+      - run: sqlcmd -U SA -P 'YourStrong!Passw0rd' -C -Q 'CREATE DATABASE tailslide_php_test'
       - run: ADAPTER=sqlsrv composer test
